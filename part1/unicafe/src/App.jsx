@@ -1,52 +1,38 @@
 import { useState } from "react";
 
-const History = (props) => {
-  if (props.allClicks.length === 0) {
-    return <div>the app is used by pressing the buttons</div>;
-  }
-  return <div>button press history: {props.allClicks.join(" ")}</div>;
+const Button = ({ text, onClick }) => {
+  return <button onClick={onClick}>{text}</button>;
 };
 
-const Button = ({ handleClick, text }) => (
-  <button onClick={handleClick}>{text}</button>
-);
-
 const App = () => {
-  const [left, setLeft] = useState(0);
-  const [right, setRight] = useState(0);
-  const [allClicks, setAll] = useState([]);
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
-  const [total, setTotal] = useState(0);
-
-  const handleLeftClick = () => {
-    setAll(allClicks.concat("L"));
-
-    const updatedLeft = left + 1;
-    setLeft(updatedLeft);
-
-    setTotal(updatedLeft + right);
+  const handleGood = () => {
+    console.log(good);
+    setGood(good + 1);
   };
 
-  const handleRightClick = () => {
-    setAll(allClicks.concat("R"));
+  const handleNeutral = () => {
+    setNeutral(neutral + 1);
+  };
 
-    const updatedRight = right + 1;
-    setRight(updatedRight);
-
-    setTotal(left + updatedRight);
+  const handleBad = () => {
+    setBad(bad + 1);
   };
 
   return (
-    <div>
-      {left}
-      <Button handleClick={handleLeftClick} text="left" />
-      <Button handleClick={handleRightClick} text="right" />
-      {right}
-
-      <History allClicks={allClicks} />
-
-      <p>total {total}</p>
-    </div>
+    <>
+      <h1>Give feedback</h1>
+      <Button text="good" onClick={handleGood} />
+      <Button text="neutral" onClick={handleNeutral} />
+      <Button text="bad" onClick={handleBad} />
+      <h1>Statistics</h1>
+      <p>Good: {good}</p>
+      <p>Neutral: {neutral}</p>
+      <p>Bad: {bad}</p>
+    </>
   );
 };
 
